@@ -1,30 +1,53 @@
 import "./App.css";
-import Row from "./Components/Row";
-import requests from "./requests";
-import Banner from "./Components/Banner";
-import Nav from "./Components/Nav";
-import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-function App() {
+import LoginScreen from "./Components/LoginScreen";
+import React from "react";
+import { useEffect } from "react";
+import { auth } from "./firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout, selectUser } from "./userSlice";
+import Home from "./Components/Home";
+import ProfileScreen from "./Components/ProfileScreen";
+
+const App = () => {
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      if (userAuth) {
+        // Logged in
+
+        dispatch(
+          login({
+            uid: userAuth.uid,
+            email: userAuth.email,
+          })
+        );
+      } else {
+        // Logged out
+        dispatch(logout());
+      }
+    });
+
+    return unsubscribe;
+  }, [dispatch]);
+
   return (
     <div className="App">
-      <Nav />
-      <Banner />
-
-      <Row
-        title="NETFLIX ORIGINALS"
-        fetchUrl={requests.fetchNetflixOriginals}
-        isLargeRow
-      />
-      <Row title="Trending Now" fetchUrl={requests.fetchTrending} />
-      <Row title="Top Rated" fetchUrl={requests.fetchTopRated} />
-      <Row title="Action Movies" fetchUrl={requests.fetchActionMovies} />
-      {/* <Row title="Comedy Movies" fetchUrl={requests.fetchComedyMovies} />
-      <Row title="Horror Movies" fetchUrl={requests.fetchHorrorMovies} />
-      <Row title="Romance Movies" fetchUrl={requests.fetchComedyMovies} />
-      <Row title="Documentary Movies" fetchUrl={requests.fetchDocumantaries} /> */}
+      <Router>
+        {!user ? (
+          <LoginScreen />
+        ) : (
+          <Routes>
+            <Route path="/profile" element={<ProfileScreen />} />
+            <Route exact path="/" element={<Home />} />
+          </Routes>
+        )}
+      </Router>
     </div>
   );
-}
+};
 
 export default App;

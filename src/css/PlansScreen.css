@@ -1,0 +1,53 @@
+.plansScreen__plan {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  opacity: 0.8;
+}
+.plansScreen__plan:hover {
+  opacity: 1;
+}
+.plansScreen__plan > button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #e50914;
+  cursor: pointer;
+}
+
+.planScreen__plan__disabled > button {
+  background-color: gray;
+}
+.planScreen__info > h5 {
+  font-size: 16px;
+}
+.planScreen__info > h6 {
+  font-size: 14px;
+}
+
+#loaderStart {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100vh;
+  background-color: black;
+}
+#loaderStop {
+  display: none;
+}
+.ovalLoader {
+  margin: 20% auto;
+  width: 200px;
+}
+@media only screen and (max-width: 600px) {
+  .plansScreen__plan {
+    opacity: 1;
+  }
+  .ovalLoader {
+    margin: 50% auto;
+    width: fit-content;
+  }
+}
