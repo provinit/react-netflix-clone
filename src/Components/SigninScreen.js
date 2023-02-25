@@ -1,6 +1,6 @@
 import React from "react";
 import { useRef } from "react";
-import "../CSS/SignupScreen.css";
+import "../css/SignupScreen.css";
 import { auth } from "../firebase";
 
 function SigninScreen() {

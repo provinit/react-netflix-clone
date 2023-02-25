@@ -1,5 +1,5 @@
 import React from "react";
-import "../CSS/ProfileScreen.css";
+import "../css/ProfileScreen.css";
 import Nav from "./Nav";
 import { useSelector } from "react-redux";
 import { selectUser } from "../userSlice";
